@@ -1,0 +1,12 @@
+Name: lorenzo Surname: galeotti Year: 2024
+Name: pippo Surname: pappo Year: 2000
+Name: Pablo Surname: Rossi Year: 2001
+Student: 100
+
+-----------------------
+Student: 101
+
+-----------------------
+Student: 102
+
+-----------------------
