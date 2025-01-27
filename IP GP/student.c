@@ -68,10 +68,3 @@ void addLastPassedCourse(student s, char* courseName);
 void freeStudent(student s);
 
 #endif
-
-
-/*EFFECT: Frees the space used to store s. 
-          Has no effects if s is NULL.*/
-void freeStudent(student s);
-
-#endif
