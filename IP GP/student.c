@@ -24,10 +24,50 @@ typedef struct studentInner{
 	struct passedcourses{
 		char course[20];
 		struct passedcourses* next;
-}*students;
+}*student;
 
-struct students[100];
-int i = -1;
+int max;//capacity of array
+int size=0;
+
+int init(int N){
+	max=N;
+	if (max>=0){
+		lda = malloc(max*sizeof(struct student));
+		return 1;}
+	else{ 
+		return 0;}
+	}
+
+int addElem(student s){
+	if (size<max){
+		lda[size]=s;
+		size++;
+		return 1;
+	}
+	else
+		return 0;
+}
+
+/* int removeElem(int i){
+	lda[i]=0;
+	for (int j=i;j<size-1;j++){
+		lda[j]=lda[j+1];
+	}
+	size--;
+return 1;
+}
+
+void print(){
+	printf("[ ");
+	for (int i=0;i<size;i++){
+		printf("%d ",lda[i]);
+		}
+	printf("]\n");
+} */
+
+void freelda(){
+	free(lda);
+}
 
 /*EFFECTS: Creates a new student with the given data and returns it*/
 student newStudent(char * name, char * surname, int id,  int year){
