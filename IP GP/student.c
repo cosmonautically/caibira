@@ -11,15 +11,15 @@
 				the names of the courses that the student 
 				passed so far in the order in which they were taken*/
 
-typedef struct studentInner * student {
-	char[10] name;
-	char[10] surname;
+typedef struct studentInner{
+	char name[10];
+	char surname[10];
 	int id;
 	int year;
 	struct passedcourses{
-		char[20] course;
+		char course[20];
 		struct passedcourses* next;
-}students;
+}*students;
 
 struct students[100];
 int i = -1;
