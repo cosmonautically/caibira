@@ -6,6 +6,17 @@
 #define STUD
 
 
+/*OVERVIEW: This is the interface for a student data structure. 
+	    A student should have the following attributes:
+		-Name: A string of maximum 10 char
+		-Surname: A string of maximum 10 char
+		-Id: A number which identifies a student
+		-Year: the year in which the student enrolled for the first time
+		-Passed Courses: a sequence of strings which stores 
+				the names of the courses that the student 
+				passed so far in the order in which they were taken*/
+
+
 // structure to represent a class that a student has passed.
 typedef struct Class {
     char name[50];          // name of the class
@@ -17,14 +28,15 @@ typedef struct Student {
     int id;                 // student ID
     char name[10];     // first name
     char surname[10];      // last name
+	int year;
     Class* passedClasses;   // pointer to the linked list passedClasses
 } Student;
 
 // structure to manage the dynamic array of students.
 typedef struct {
     Student* students;      // pointer to the dynamic array of Student structs
-    size_t size;            // current number of students in the array
-    size_t capacity;        // maximum number of students before resizing is needed
+    int size;            // current number of students in the array**
+    int capacity;        // maximum number of students before resizing is needed
 } StudentDirectory;
 
 // initialize the student directory.
@@ -40,7 +52,7 @@ void initDirectory(StudentDirectory* directory, size_t initialCapacity) {
 
 // resize the dynamic array when it's full.
 void resizeDirectory(StudentDirectory* directory) {
-    size_t newCapacity = directory->capacity * 2; // double the capacity
+    size_t newCapacity = directory->capacity += 5; // double the capacity
     Student* newArray = realloc(directory->students, newCapacity * sizeof(Student)); // reallocate memory
     if (newArray) {
         directory->students = newArray;
@@ -52,18 +64,8 @@ void resizeDirectory(StudentDirectory* directory) {
 }
 
 
-/*OVERVIEW: This is the interface for a student data structure. 
-	    A student should have the following attributes:
-		-Name: A string of maximum 10 char
-		-Surname: A string of maximum 10 char
-		-Id: A number which identifies a student
-		-Year: the year in which the student enrolled for the first time
-		-Passed Courses: a sequence of strings which stores 
-				the names of the courses that the student 
-				passed so far in the order in which they were taken*/
-
 /*EFFECTS: Creates a new student with the given data and returns it*/
- newStudent(StudentDirectory * directory, char * name, char * surname, int id,  int year){
+ newStudent(StudentDirectory * directory, char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
 	if (directory->size == directory->capacity) { //check if array is full > resize
 		resizeDirectory(directory);
 	}
@@ -77,14 +79,11 @@ student->passedClasses = NULL;
 directory->size++; //increase size 
 }
 
-
-
-
 /*EFFECT: Returns the name of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentName(Student s){
-	if (student[s] !=NULL){
-		return student[s]->name;
+	if (s.name !=NULL){
+		return s.name;
 	}
 	else return "NONE";
 }
@@ -92,8 +91,8 @@ char * getStudentName(Student s){
 /*EFFECT: Returns the surname of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentSurname(Student s){
-	if (student[s] !=NULL){
-		return student[s]->surname;
+	if (s.surname !=NULL){
+		return s.surname;
 	}
 	else return "NONE";
 }
@@ -101,16 +100,16 @@ char * getStudentSurname(Student s){
 /*EFFECT: Returns the id of the student s. 
           If s is NULL it returns -1.*/
 int getStudentId(Student s){
-	if (student[s] !=NULL){
-		return student[s]->id;}
+	if (s.id !=NULL){
+		return s.id;}
 	else return -1;
 }
 
 /*EFFECT: Returns the year in which the student s enrolled. 
 	  If s is NULL it returns -1.*/
 int getStudentYear(Student s){
-	if (student[s] !=NULL){
-		return student[s]->name;}
+	if (s.year !=NULL){
+		return s.year;}
 	else return -1;
 }
 
@@ -119,32 +118,58 @@ int getStudentYear(Student s){
 	  If s is NULL it returns NULL. 
 	  Note that the array must be deallocated by the caller.*/
 char** getPassedCourses(Student s){
-	if (student[s] !=NULL){
-		return student[s]->passedcourses;}
-	else return NULL;
+
+	int size = getNumberOfPassedCourses(s);
+	int i = 0;
+	char passarray[] = malloc(size*sizeof(char[30]));
+	Class* current = s.passedClasses;
+
+	if (current == NULL){
+		printf("Student %s %s has not passed any classes :c\n", s.name, s.surname);
+		return NULL;
+		}
+	else {
+		while (current != NULL) {
+				passarray[i] = current->name;
+				current = current->next;
+				i++;
+		}
+	}
+	return *passarray;
 }
 
 /*EFFECT: Returns the number of the courses that the student passed.
 If s is NULL returns -1.*/
 int getNumberOfPassedCourses(Student s){
-	struct passedcourses*head;
-	struct passedcourses*tracer;	
-	while (student[s]->passedcourses!=NULL){ //should it check passedcourses->tracer?
-		//cycle through passed courses
-		int numofcourses++;}
+
+	if (!s.passedClasses) {
+		printf("Student %s %s has not passed any classes.\n", s.name, s.surname);
+        return;
+	}
+
+	printf("Classes passed by %s %s:\n", s.name, s.surname);
+
+	int numofcourses;
+	Class* current = s.passedClasses;
+
+	while(current!=NULL){
+		//cycle through passed course
+		numofcourses++;
+		current = current->next;
+	}
 	return numofcourses;
 }
 
 /*EFFECT: Adds courseName to the courses passed by the student s*/
-void addLastPassedCourse(Student s, char* courseName) {
+void addLastPassedCourse(Student* s, char* courseName) {
 	Class* newClass = malloc(sizeof(Class));
 	if (!newClass) {
 		printf("Error: Memory allocation failed.\n");
 		exict(EXIT_FAILURE);
 	}
 	strncpy(newClass->name, courseName, sizeof(newClass->name) - 1);
-	newClass->next = Student->passedClasses;
-	Student->passedClasses = newClass;
+	newClass->next = s->passedClasses;
+	s->passedClasses = newClass;
 }
 
 /*EFFECT: Frees the space used to store s. 
