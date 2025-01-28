@@ -23,7 +23,7 @@ typedef struct studentInner{
 	int year;
 	struct passedcourses{
 		char course[20];
-		struct passedcourses* next;
+		struct passedcourses* next;}
 }*student;
 
 int max;//capacity of array
