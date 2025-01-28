@@ -8,31 +8,37 @@ Moreover the manager offers various functionalities to retrieve data about stude
 */
 
 typedef struct studManInner * studman;{
-
-}student;
+	
+};
 
 
 
 /*EFFECTS: Creates a new empty studman and returns it. 
   	   StartingID will be the first ID assigned to students in this studman.*/
 studman newStudMan(int startingID);
-  struct student->id= malloc(sizeof(struct student->id));
+  
 
 
 /*EFFECTS: Creates and adds a new student with the given data to sm. It also assigns 
            an ID to the student and returns it. The IDs will be assigned progressively 
 	   starting from startingID (see newStudMan), i.e., the first student will have ID 
 	   startingID the second startingID+1 and so on. */
-int  addStudent(studman sm, char * name, char * surname, int year);
-
+int  addStudent(studman sm, char * name, char * surname, int year){
+	void newStudent(studman sm, char * name, char * surname, int year);
+}
 
 /*EFFECTS: Returns the number of students in sm.*/
-int getStudentsNum(studman sm);
+int getStudentsNum(studman sm){
 
+}
 
 /*EFFECT: Returns the name of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
-char * getName(studman sm, int studentID);
+char * getName(studman sm, int studentID){
+	
+	char getStudentName(sm);
+}
+
 
 /*EFFECT: Returns the surname of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
