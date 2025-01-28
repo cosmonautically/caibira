@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int* lda = NULL; // The array for the limited dynamic array
+int N = 0;       // Capacity of the array
+int size = 0;    // Current number of elements
+
+// Initializes the lda with a maximum capacity of N
+int init(int capacity) {
+    if (capacity < 0) {
+        return 0; // Invalid capacity
+    }
+    N = capacity;
+    lda = (int*)malloc(N * sizeof(int));
+    if (!lda) {
+        perror("Memory allocation failed");
+        return 0;
+    }
+    size = 0; // No elements added yet
+    return 1; // Success
+}
+
+// Adds an element to the first free space of the lda
+int addElem(int value) {
+    if (size >= N) {
+        return 0; // Array is full
+    }
+    lda[size++] = value; // Add value and increment size
+    return 1;            // Success
+}
+
+// Removes the element at position i and shifts remaining elements
+int removeElem(int index) {
+    if (index < 0 || index >= size) {
+        return 0; // Invalid index
+    }
+    int removedValue = lda[index];
+    for (int j = index; j < size - 1; j++) {
+        lda[j] = lda[j + 1]; // Shift elements to the left
+    }
+    size--; // Decrease size
+    return removedValue;
+}
+
+// Prints the elements of lda in the required format
+void print() {
+    printf("[ ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", lda[i]);
+    }
+    printf("]\n");
+}
+
+// Frees the memory allocated for lda
+void freelda() {
+    free(lda);
+    lda = NULL; // Avoid dangling pointer
+    N = 0;
+    size = 0;
+}
+
+int main() {
+    // Test the lda functions
+    if (!init(3)) {
+        printf("Failed to initialize lda.\n");
+        return 1;
+    }
+
+    addElem(3);
+    addElem(2);
+    addElem(1);
+    print();
+
+    removeElem(2);
+    print();
+
+    addElem(4);
+    removeElem(2);
+    addElem(5);
+    print();
+
+    freelda();
+    return 0;
+}
