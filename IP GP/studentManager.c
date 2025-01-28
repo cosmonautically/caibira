@@ -1,5 +1,6 @@
 #ifndef STUDMAN
 #define STUDMAN
+#include "student.h"
 
 /*In this file we will define students' managers. A student manager allows to manage groups of AUC students.
 A student manager (studman) is a mutable collection of students (see student.h) where students can be added.
@@ -27,6 +28,7 @@ int  addStudent(studman sm, char * name, char * surname, int year);
 
 /*EFFECTS: Returns the number of students in sm.*/
 int getStudentsNum(studman sm);
+
 
 /*EFFECT: Returns the name of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
