@@ -46,7 +46,7 @@ char * getStudentName(student s){
 /*EFFECT: Returns the surname of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentSurname(student s){
-	if (student [s] !=NULL){
+	if (student[s] !=NULL){
 		return student[s]->surname;
 	}
 	else return "NONE";
@@ -55,7 +55,7 @@ char * getStudentSurname(student s){
 /*EFFECT: Returns the id of the student s. 
           If s is NULL it returns -1.*/
 int getStudentId(student s){
-	if (student [s] !=NULL){
+	if (student[s] !=NULL){
 		return student[s]->id;}
 	else return -1;
 }
@@ -63,7 +63,7 @@ int getStudentId(student s){
 /*EFFECT: Returns the year in which the student s enrolled. 
 	  If s is NULL it returns -1.*/
 int getStudentYear(student s){
-	if (student [s] !=NULL){
+	if (student[s] !=NULL){
 		return student[s]->name;}
 	else return -1;
 }
@@ -73,7 +73,7 @@ int getStudentYear(student s){
 	  If s is NULL it returns NULL. 
 	  Note that the array must be deallocated by the caller.*/
 char** getPassedCourses(student s){
-	if (student [s] !=NULL){
+	if (student[s] !=NULL){
 		return student[s]->passedcourses;}
 	else return NULL;
 }
