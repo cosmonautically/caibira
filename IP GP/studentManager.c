@@ -1,6 +1,9 @@
 #ifndef STUDMAN
 #define STUDMAN
 #include "student.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 /*In this file we will define students' managers. A student manager allows to manage groups of AUC students.
 A student manager (students) is a mutable collection of students (see student.h) where students can be added.
