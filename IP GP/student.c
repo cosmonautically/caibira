@@ -1,13 +1,18 @@
 #ifndef STUD
 #define STUD
 
+int* studentDirectory;
+int N;
+int size;
+
+
 /*OVERVIEW: This is the interface for a student data structure. 
 	    A student should have the following attributes:
 		-Name: A string of maximum 10 char
 		-Surname: A string of maximum 10 char
 		-Id: A number which identifies a student
 		-Year: the year in which the student enrolled for the first time
-		-Passed Curses: a sequence of strings which stores 
+		-Passed Courses: a sequence of strings which stores 
 				the names of the courses that the student 
 				passed so far in the order in which they were taken*/
 
