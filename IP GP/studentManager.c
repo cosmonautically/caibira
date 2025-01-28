@@ -41,7 +41,7 @@ void initDirectory(StudentDirectory* directory, size_t initialCapacity) {
 
 // resize the dynamic array when it's full.
 void resizeDirectory(StudentDirectory* directory) {
-    size_t newCapacity = directory->capacity += 5; // double the capacity
+    int newCapacity = directory->capacity += 5; // double the capacity
     Student* newArray = realloc(directory->students, newCapacity * sizeof(Student)); // reallocate memory
     if (newArray) {
         directory->students = newArray;
@@ -52,6 +52,7 @@ void resizeDirectory(StudentDirectory* directory) {
     }
 }
 
+/*EFFECTS: Creates a new student with the given data and returns it*/
 
 
 
@@ -66,7 +67,20 @@ students newstudents(int startingID);
 	   starting from startingID (see newstudents), i.e., the first student will have ID 
 	   startingID the second startingID+1 and so on. */
 int  addStudent(students sm, char * name, char * surname, int year){
-	void newStudent(students sm, char * name, char * surname, int year);
+	Student newStudent(StudentDirectory * directory, char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
+	if (directory->size == directory->capacity) { //check if array is full > resize
+		resizeDirectory(directory);
+	}
+
+	// add student at end of array
+	Student* student = &directory->students[directory->size];
+	student->id = id;
+	strncpy(student->name, name, sizeof(student->name) - 1);
+	strncpy(student->surname, surname, sizeof(student->surname) - 1);
+	student->passedClasses = NULL;
+	directory->size++; //increase size 
+	}
+	
 }
 
 /*EFFECTS: Returns the number of students in sm.*/
