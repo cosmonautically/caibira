@@ -1,0 +1,4 @@
+lda
+list vs array -> indexing array with ID
+realloc operation takes memory -> double capacity every time
+strncopy vs pointer to limit access
