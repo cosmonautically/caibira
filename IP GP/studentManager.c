@@ -55,80 +55,76 @@ void resizeDirectory(StudentDirectory* directory) {
     }
 }
 
-/*EFFECTS: Creates a new student with the given data and returns it*/
 
-
-
-/*EFFECTS: Creates a new empty students and returns it. 
-  	   StartingID will be the first ID assigned to students in this students.*/
-students newstudents(int startingID);
-  
 
 
 /*EFFECTS: Creates and adds a new student with the given data to sm. It also assigns 
            an ID to the student and returns it. The IDs will be assigned progressively 
 	   starting from startingID (see newstudents), i.e., the first student will have ID 
 	   startingID the second startingID+1 and so on. */
-int  addStudent(students sm, char * name, char * surname, int year){
-	Student newStudent(StudentDirectory * directory, char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
-	if (directory->size == directory->capacity) { //check if array is full > resize
-		resizeDirectory(directory);
-	}
+int  addStudent(StudentDirectory *directory, char * name, char * surname, int startingID, int year){
 
 	// add student at end of array
 	Student* student = &directory->students[directory->size];
-	student->id = id;
+	student->id = (startingID+directory->size);
 	strncpy(student->name, name, sizeof(student->name) - 1);
 	strncpy(student->surname, surname, sizeof(student->surname) - 1);
 	student->passedClasses = NULL;
 	directory->size++; //increase size 
 	}
-	
+
+/*EFFECTS: Creates a new empty studentdirectory and returns it. 
+  	   StartingID will be the first ID assigned to students in this students.*/
+StudentDirectory newstudentdirectory(StudentDirectory* directory, int startingID){
+    if (directory->size == directory->capacity) { //check if array is full > resize
+        resizeDirectory(directory);}
+    int startingID;
+  //  addStudent(sm, name, surname, StartingID, year); -- dir should be empty
 }
 
 /*EFFECTS: Returns the number of students in sm.*/
-int getStudentsNum(students sm){
+int getStudentsNum(StudentDirectory sm){
 
 }
 
 /*EFFECT: Returns the name of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
-char * getName(students sm, int studentID){
+char * getName(StudentDirectory *directory, int studentID){
 	
-	char getStudentName(sm);
+	
 }
 
 
 /*EFFECT: Returns the surname of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
-char * getSurname(students sm, int studentID);
+char * getSurname(StudentDirectory sm, int studentID);
 
 /*EFFECT: Returns the year of enrollment of the student in sm with ID studentID. 
     	  If there is no such student returns -1*/
-int getYear(students sm, int studentID);
+int getYear(StudentDirectory sm, int studentID);
 
 /*EFFECT: Adds the last passed course to the student with ID studentID. 
  	  If there is no such a student it does not do anything.*/
-void addCourseToStudent(students sm, int studentID, char * courseName);
+void addCourseToStudent(StudentDirectory sm, int studentID, char * courseName);
 
 /*EFFECT: Returns an array of the courses that the student with studentID 
  	  passed in the order in which they were passed (from older to newer).
           If there is no student with the given studentID returns NULL. 
           Note that the array must be deallocated by the caller.*/
-char**  getStudentPassedCourses(students sm, int studentID);
+char**  getStudentPassedCourses(StudentDirectory sm, int studentID);
 
 
 /*EFFECT: Returns the number of courses passed by the student with ID studentID.
           If there is no such a student returns -1 */
-int  getNumberStudentPassedCourses(students sm, int studentID);
+int  getNumberStudentPassedCourses(StudentDirectory sm, int studentID);
 
 
 /*EFFECT: Returns the studentID of the student with the given surname. 
           If there is no such a student returns -1, if there are more
           than one students with the same surname returns -2.*/
-int getStudentsBySurname(students sm, char * surname);
+int getStudentsBySurname(StudentDirectory sm, char * surname);
 
 /*EFFECT: Frees the space used to store sm. Has no effects if s is NULL.*/
-void freestudents(students sm);
+void freestudents(StudentDirectory sm);
 
 #endif
