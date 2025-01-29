@@ -47,7 +47,7 @@ void initDirectory(StudManInner* directory, size_t initialCapacity) {
 // resize the dynamic array when it's full.
 void resizeDirectory(StudManInner* directory) {
     int newCapacity = directory->capacity *2; // double the capacity
-    Student* newArray = realloc(directory->students, newCapacity * sizeof(Student)); // reallocate memory
+    student* newArray = realloc(directory->students, newCapacity * sizeof(student)); // reallocate memory
     if (newArray) {
         directory->students = newArray;
         directory->capacity = newCapacity;
@@ -75,7 +75,7 @@ StudManInner* newstudentdirectory(StudManInner* directory, int startingID){
 int  addStudent(StudManInner *directory, char * name, char * surname, int startingID, int year){
 
 	// add student at end of array
-	Student* student = &directory->students[directory->size];
+	student* student = &directory->students[directory->size];
 	student->id = (startingID+directory->size);
 	strncpy(student->name, name, sizeof(student->name) - 1);
 	strncpy(student->surname, surname, sizeof(student->surname) - 1);
@@ -95,8 +95,9 @@ char * getName(StudManInner *directory, int studentID){
     student s;
 	for (int i=0;i<directory->size;i++){
         if (directory->students[studentID-directory->startingID].id==studentID){
-    s = &directory->students[studentID-directory->startingID];
-    }}
+            s = directory->students[studentID-directory->startingID];
+        }
+    }
     getStudentName(s);
 	
 }
