@@ -45,7 +45,7 @@ void initDirectory(StudentDirectory* directory, size_t initialCapacity) {
 
 // resize the dynamic array when it's full.
 void resizeDirectory(StudentDirectory* directory) {
-    int newCapacity = directory->capacity += 5; // double the capacity
+    int newCapacity = directory->capacity *2; // double the capacity
     Student* newArray = realloc(directory->students, newCapacity * sizeof(Student)); // reallocate memory
     if (newArray) {
         directory->students = newArray;
