@@ -35,7 +35,7 @@ directory->size++; //increase size
 
 /*EFFECT: Returns the name of the student s. 
           If s is NULL it returns "NONE".*/
-char * getStudentName(Student s){
+char * getStudentName(student s){
 	if (s.name !=NULL){
 		return s.name;
 	}
