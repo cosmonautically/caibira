@@ -17,20 +17,34 @@
 				passed so far in the order in which they were taken*/
 
 
+typedef struct Class { // CLONE FROM STUDMAN.
+    char name[50];          // name of the class
+    struct Class* next;     // pointer to the next class in the linked list
+} Class;
+
+// structure to represent a student CLONE FROM STUDMAN
+typedef struct studentInner {
+    int id;                 // student ID
+    char name[10];     // first name
+    char surname[10];      // last name
+	int year;
+    Class* passedClasses;   // pointer to the linked list passedClasses
+} student;
+
+
 
 /*EFFECTS: Creates a new student with the given data and returns it*/
  newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
-	if (directory->size == directory->capacity) { //check if array is full > resize
-		resizeDirectory(directory);
-	}
+	// if (directory->size == directory->capacity) { //check if array is full > resize
+	// 	resizeDirectory(directory);
+	// }
 
 // add student at end of array
-Student* student = &directory->students[directory->size]; // **node creation need not be array specific
+student* student; // **node creation need not be array specific
 student->id = id;
 strncpy(student->name, name, sizeof(student->name) - 1);
 strncpy(student->surname, surname, sizeof(student->surname) - 1);
 student->passedClasses = NULL;
-directory->size++; //increase size 
 }
 
 /*EFFECT: Returns the name of the student s. 
@@ -44,7 +58,7 @@ char * getStudentName(student s){
 
 /*EFFECT: Returns the surname of the student s. 
           If s is NULL it returns "NONE".*/
-char * getStudentSurname(Student s){
+char * getStudentSurname(student s){
 	if (s.surname !=NULL){
 		return s.surname;
 	}
@@ -53,7 +67,7 @@ char * getStudentSurname(Student s){
 
 /*EFFECT: Returns the id of the student s. 
           If s is NULL it returns -1.*/
-int getStudentId(Student s){
+int getStudentId(student s){
 	if (s.id !=NULL){
 		return s.id;}
 	else return -1;
@@ -61,7 +75,7 @@ int getStudentId(Student s){
 
 /*EFFECT: Returns the year in which the student s enrolled. 
 	  If s is NULL it returns -1.*/
-int getStudentYear(Student s){
+int getStudentYear(student s){
 	if (s.year !=NULL){
 		return s.year;}
 	else return -1;
@@ -71,7 +85,7 @@ int getStudentYear(Student s){
 	  the order in which they were passed (from older to newer).
 	  If s is NULL it returns NULL. 
 	  Note that the array must be deallocated by the caller.*/
-char** getPassedCourses(Student s){
+char** getPassedCourses(student s){
 
 	int size = getNumberOfPassedCourses(s);
 	int i = 0;
@@ -94,14 +108,14 @@ char** getPassedCourses(Student s){
 
 /*EFFECT: Returns the number of the courses that the student passed.
 If s is NULL returns -1.*/
-int getNumberOfPassedCourses(Student s){
+int getNumberOfPassedCourses(student s){
 
 	if (!s.passedClasses) {
 		printf("Student %s %s has not passed any classes.\n", s.name, s.surname);
         return;
 	}
 
-	printf("Classes passed by %s %s:\n", s.name, s.surname);
+	//printf("Classes passed by %s %s:\n", s.name, s.surname);
 
 	int numofcourses;
 	Class* current = s.passedClasses;
@@ -115,25 +129,21 @@ int getNumberOfPassedCourses(Student s){
 }
 
 /*EFFECT: Adds courseName to the courses passed by the student s*/
-void addLastPassedCourse(Student* s, char* courseName) {
+void addLastPassedCourse(student s, char* courseName) {
 	Class* newClass = malloc(sizeof(Class));
 	if (!newClass) {
 		printf("Error: Memory allocation failed.\n");
 		exict(EXIT_FAILURE);
 	}
 	strncpy(newClass->name, courseName, sizeof(newClass->name) - 1);
-	newClass->next = s->passedClasses;
-	s->passedClasses = newClass;
+	newClass->next = s.passedClasses;
+	s.passedClasses = newClass;
 }
 
 /*EFFECT: Frees the space used to store s. 
           Has no effects if s is NULL.*/
-void freeStudent(Student s);
-
-
-void main () {
-
-
+void freeStudent(student s) {
+	free(&s);
 }
 
 #endif

@@ -11,48 +11,36 @@ A student manager hi (students) is a mutable collection of students (see student
 Moreover the manager offers various functionalities to retrieve data about students.
 */
 
-typedef struct Class {
-    char name[50];          // name of the class
-    struct Class* next;     // pointer to the next class in the linked list
-} Class;
-
-// structure to represent a student.
-typedef struct studentInner {
-    int id;                 // student ID
-    char name[10];     // first name
-    char surname[10];      // last name
-	int year;
-    Class* passedClasses;   // pointer to the linked list passedClasses
-} student;
-
 // structure to manage the dynamic array of students.
-typedef struct {
+struct studManInner {
     student* students;      // pointer to the dynamic array of Student structs
     int size;            // current number of students in the array**
     int capacity;        // maximum number of students before resizing is needed
     int startingID;     //starting ID
-} StudManInner;
+};
+
+typedef struct studManInner * studman;
 
 // initialize the student directory.
-void initDirectory(StudManInner* directory, size_t initialCapacity) {
-    directory->students = malloc(initialCapacity * sizeof(student)); // allocate memory for the array
-    if (!directory->students) {
+void initDirectory(studman sm, int initialCapacity) {
+    sm->students = malloc(initialCapacity * sizeof(student)); // allocate memory for the array
+    if (!sm->students) {
         fprintf(stderr, "Error: Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
-    directory->size = 0;      // initially, no students are in the directory
-    directory->capacity = initialCapacity; // set the initial capacity
+    sm->size = 0;      // initially, no students are in the directory
+    sm->capacity = initialCapacity; // set the initial capacity
 }
 
 // resize the dynamic array when it's full.
-void resizeDirectory(StudManInner* directory) {
-    int newCapacity = directory->capacity *2; // double the capacity
-    student* newArray = realloc(directory->students, newCapacity * sizeof(student)); // reallocate memory
+void resizeDirectory(studman sm) {
+    int newCapacity = sm->capacity * 2; // double the capacity
+    student* newArray = realloc(sm->students, newCapacity * sizeof(student)); // reallocate memory
     if (newArray) {
-        directory->students = newArray;
-        directory->capacity = newCapacity;
+        sm->students = newArray;
+        sm->capacity = newCapacity;
     } else {
-        fprintf(stderr, "Error: Unable to resize directory\n");
+        fprintf(stderr, "Error: Unable to resize sm\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -60,79 +48,94 @@ void resizeDirectory(StudManInner* directory) {
 
 /*EFFECTS: Creates a new empty studentdirectory and returns it. 
   	   StartingID will be the first ID assigned to students in this students.*/
-StudManInner* newstudentdirectory(StudManInner* directory, int startingID){
-    if (directory->size == directory->capacity) { //check if array is full > resize
-        resizeDirectory(directory);}
-    directory->startingID=startingID;
-    return directory;
-}
+studman newstudentdirectory(int startingID){
+    studman sm;
 
+    if (sm->size == sm->capacity) { //check if array is full > resize
+        resizeDirectory(sm);}
+    sm->startingID=startingID;
+    return sm;
+}
 
 /*EFFECTS: Creates and adds a new student with the given data to sm. It also assigns 
            an ID to the student and returns it. The IDs will be assigned progressively 
 	   starting from startingID (see newstudents), i.e., the first student will have ID 
 	   startingID the second startingID+1 and so on. */
-int  addStudent(StudManInner *directory, char * name, char * surname, int startingID, int year){
-
+int  addStudent(studman sm, char * name, char * surname, int year){
+    student student = newStudent(name, surname, (sm->startingID+sm->size), year);
 	// add student at end of array
-	student* student = &directory->students[directory->size];
-	student->id = (startingID+directory->size);
-	strncpy(student->name, name, sizeof(student->name) - 1);
-	strncpy(student->surname, surname, sizeof(student->surname) - 1);
-	student->passedClasses = NULL;
-	directory->size++; //increase size 
+	student = &sm->students[sm->size];
+	sm->size++; //increase size 
 	}
 
-
 /*EFFECTS: Returns the number of students in sm.*/
-int getStudentsNum(StudManInner sm){
-
+int getStudentsNum(studman sm){
+    return sm->size;
 }
 
 /*EFFECT: Returns the name of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
-char * getName(StudManInner *directory, int studentID){
-    student s;
-	for (int i=0;i<directory->size;i++){
-        if (directory->students[studentID-directory->startingID].id==studentID){
-            s = directory->students[studentID-directory->startingID];
-        }
-    }
-    getStudentName(s);
+char * getName(studman sm, int studentID){
+    student s = sm->students[studentID-sm->startingID];
+    return getStudentName(s);
 	
 }
 
-
 /*EFFECT: Returns the surname of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
-char * getSurname(StudManInner sm, int studentID);
+char * getSurname(studman sm, int studentID){
+    student s = sm->students[studentID-sm->startingID];
+    return getStudentSurname(s);
+   
+    }
 
 /*EFFECT: Returns the year of enrollment of the student in sm with ID studentID. 
     	  If there is no such student returns -1*/
-int getYear(StudManInner sm, int studentID);
+int getYear(studman sm, int studentID){
+    student s = sm->students[studentID-sm->startingID];
+    return getStudentYear(s);
+    }
 
 /*EFFECT: Adds the last passed course to the student with ID studentID. 
  	  If there is no such a student it does not do anything.*/
-void addCourseToStudent(StudManInner sm, int studentID, char * courseName);
+void addCourseToStudent(studman sm, int studentID, char * courseName) {
+    student s = sm->students[studentID-sm->startingID];
+    addLastPassedCourse(s, courseName);
+}
 
 /*EFFECT: Returns an array of the courses that the student with studentID 
  	  passed in the order in which they were passed (from older to newer).
           If there is no student with the given studentID returns NULL. 
           Note that the array must be deallocated by the caller.*/
-char**  getStudentPassedCourses(StudManInner sm, int studentID);
-
+char**  getStudentPassedCourses(studman sm, int studentID){
+    student s = sm->students[studentID-sm->startingID];
+    return getPassedCourses(s);
+    }
 
 /*EFFECT: Returns the number of courses passed by the student with ID studentID.
           If there is no such a student returns -1 */
-int  getNumberStudentPassedCourses(StudManInner sm, int studentID);
+int  getNumberStudentPassedCourses(studman sm, int studentID) {
+    student s = sm->students[studentID-sm->startingID];
+    return getNumberOfPassedCourses(s);
+}
 
 
 /*EFFECT: Returns the studentID of the student with the given surname. 
           If there is no such a student returns -1, if there are more
           than one students with the same surname returns -2.*/
-int getStudentsBySurname(StudManInner sm, char * surname);
+int getStudentsBySurname(studman sm, char * surname){
+    student s;
+    for(int i=0;i<sm->size-1;i++){
+        if (strcmp(getStudentSurname(sm->students[i]), surname) == 0) {
+            s = sm->students[i];
+        }
+    }
+    return getStudentId(s);
+    }
 
 /*EFFECT: Frees the space used to store sm. Has no effects if s is NULL.*/
-void freestudents(StudManInner sm);
+void freestudents(studman sm) {
+    free(sm);
+}
 
 #endif
