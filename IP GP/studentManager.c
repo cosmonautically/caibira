@@ -1,5 +1,6 @@
 #ifndef STUDMAN
 #define STUDMAN
+
 #include "student.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,6 +57,14 @@ void resizeDirectory(StudentDirectory* directory) {
 }
 
 
+/*EFFECTS: Creates a new empty studentdirectory and returns it. 
+  	   StartingID will be the first ID assigned to students in this students.*/
+StudentDirectory* newstudentdirectory(StudentDirectory* directory, int startingID){
+    if (directory->size == directory->capacity) { //check if array is full > resize
+        resizeDirectory(directory);}
+    int startingID;
+    return directory;
+}
 
 
 /*EFFECTS: Creates and adds a new student with the given data to sm. It also assigns 
@@ -73,14 +82,6 @@ int  addStudent(StudentDirectory *directory, char * name, char * surname, int st
 	directory->size++; //increase size 
 	}
 
-/*EFFECTS: Creates a new empty studentdirectory and returns it. 
-  	   StartingID will be the first ID assigned to students in this students.*/
-StudentDirectory newstudentdirectory(StudentDirectory* directory, int startingID){
-    if (directory->size == directory->capacity) { //check if array is full > resize
-        resizeDirectory(directory);}
-    int startingID;
-  //  addStudent(sm, name, surname, StartingID, year); -- dir should be empty
-}
 
 /*EFFECTS: Returns the number of students in sm.*/
 int getStudentsNum(StudentDirectory sm){
@@ -90,7 +91,12 @@ int getStudentsNum(StudentDirectory sm){
 /*EFFECT: Returns the name of the student in sm with ID studentID. 
  	  If there is no such student returns "NONE"*/
 char * getName(StudentDirectory *directory, int studentID){
-	
+    student s;
+	for (int i=0;i<directory->size;i++){
+        if (directory->students[i].id==studentID){
+    s = &directory->students[i];
+    }}
+    getStudentName(s);
 	
 }
 
