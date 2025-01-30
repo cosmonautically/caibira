@@ -68,15 +68,13 @@ char * getStudentSurname(student s){
 /*EFFECT: Returns the id of the student s. 
           If s is NULL it returns -1.*/
 int getStudentId(student s){
-	if (s.id !=NULL){
-		return s.id;}
-	else return -1;
+	return s.id;
 }
 
 /*EFFECT: Returns the year in which the student s enrolled. 
 	  If s is NULL it returns -1.*/
 int getStudentYear(student s){
-	if (s.year !=NULL){
+	if (&s.year != NULL){
 		return s.year;}
 	else return -1;
 }
