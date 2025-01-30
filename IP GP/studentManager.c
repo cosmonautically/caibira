@@ -62,11 +62,12 @@ studman newstudentdirectory(int startingID){
            an ID to the student and returns it. The IDs will be assigned progressively 
 	   starting from startingID (see newstudents), i.e., the first student will have ID 
 	   startingID the second startingID+1 and so on. */
-int  addStudent(studman sm, char * name, char * surname, int year){
+int addStudent(studman sm, char * name, char * surname, int year){
     student student = newStudent(name, surname, (sm->startingID+sm->size), year);
 	// add student at end of array
 	student = &sm->students[sm->size];
 	sm->size++; //increase size 
+    freeStudent(student);
 	}
 
 /*EFFECTS: Returns the number of students in sm.*/
