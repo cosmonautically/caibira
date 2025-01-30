@@ -136,7 +136,7 @@ void addLastPassedCourse(student s, char* courseName) {
 	Class* newClass = malloc(sizeof(Class));
 	if (!newClass) {
 		printf("Error: Memory allocation failed.\n");
-		exict(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	strncpy(newClass->name, courseName, sizeof(newClass->name) - 1);
 	newClass->next = s.passedClasses;
