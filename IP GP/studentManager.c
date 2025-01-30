@@ -49,11 +49,9 @@ void resizeDirectory(studman sm) {
 
 /*EFFECTS: Creates a new empty studentdirectory and returns it. 
   	   StartingID will be the first ID assigned to students in this students.*/
-studman newstudentdirectory(int startingID){
-    studman sm;
-
-    if (sm->size == sm->capacity) { //check if array is full > resize
-        resizeDirectory(sm);}
+studman newStudMan(int startingID){
+    studman sm = malloc(sizeof(struct studManInner));
+    initDirectory(sm, 10);
     sm->startingID=startingID;
     return sm;
 }
@@ -64,11 +62,17 @@ studman newstudentdirectory(int startingID){
 	   startingID the second startingID+1 and so on. */
 int addStudent(studman sm, char * name, char * surname, int year){
     student student = newStudent(name, surname, (sm->startingID+sm->size), year);
-	// add student at end of array
-	student = &sm->students[sm->size];
+	
+    if (sm->size == sm->capacity) { //check if array is full > resize
+        resizeDirectory(sm);
+    }
+    
+    // add student at end of array
+	student = sm->students[sm->size];
 	sm->size++; //increase size 
     freeStudent(student);
-	}
+    return sm->size + sm->startingID;
+}
 
 /*EFFECTS: Returns the number of students in sm.*/
 int getStudentsNum(studman sm){
@@ -136,7 +140,7 @@ int getStudentsBySurname(studman sm, char * surname){
     }
 
 /*EFFECT: Frees the space used to store sm. Has no effects if s is NULL.*/
-void freestudents(studman sm) {
+void freeStudman(studman sm) {
     free(sm);
 }
 

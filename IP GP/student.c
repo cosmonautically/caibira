@@ -108,6 +108,7 @@ char** getPassedCourses(student s){
 				i++;
 		}
 	}
+
 	return passarray;
 }
 
@@ -150,10 +151,14 @@ void addLastPassedCourse(student s, char* courseName) {
 void freeStudent(student s) {
 	// free passed classes
 	if (s.passedClasses != NULL) {
-		for (int j = 0; )
+		Class* current = s.passedClasses;
+		Class* next;
+		while (current != NULL) {
+			next = current->next;
+			free(current);
+			current = next;
+		}
 	}
-
-	free(s);
 }
 
 #endif
