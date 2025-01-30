@@ -18,8 +18,6 @@ struct studManInner {
     int startingID;     //starting ID
 };
 
-typedef struct studManInner * studman;
-
 // initialize the student directory.
 void initDirectory(studman sm, int initialCapacity) {
     sm->students = malloc(initialCapacity * sizeof(student)); // allocate memory for the array
