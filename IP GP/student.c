@@ -34,17 +34,19 @@ typedef struct studentInner {
 
 
 /*EFFECTS: Creates a new student with the given data and returns it*/
-void newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
+student newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
 	// if (directory->size == directory->capacity) { //check if array is full > resize
 	// 	resizeDirectory(directory);
 	// }
 
-// add student at end of array
-student* student; // **node creation need not be array specific
-student->id = id;
-strncpy(student->name, name, sizeof(student->name) - 1);
-strncpy(student->surname, surname, sizeof(student->surname) - 1);
-student->passedClasses = NULL;
+	// add student at end of array
+	student* student = malloc(sizeof(student)); 
+	student->year = year;
+	student->id = id;
+	strncpy(student->name, name, sizeof(student->name) - 1);
+	strncpy(student->surname, surname, sizeof(student->surname) - 1);
+	student->passedClasses = NULL;
+	return *student;
 }
 
 int getNumberOfPassedCourses(student s);
