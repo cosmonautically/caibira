@@ -148,9 +148,12 @@ void addLastPassedCourse(student s, char* courseName) {
 /*EFFECT: Frees the space used to store s. 
           Has no effects if s is NULL.*/
 void freeStudent(student s) {
-	if (s != NULL) {
-		free(s);
+	// free passed classes
+	if (s.passedClasses != NULL) {
+		for (int j = 0; )
 	}
+
+	free(s);
 }
 
 #endif
