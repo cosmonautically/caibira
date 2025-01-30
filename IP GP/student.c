@@ -34,7 +34,7 @@ typedef struct studentInner {
 
 
 /*EFFECTS: Creates a new student with the given data and returns it*/
- newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
+void newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHANGE ARGUMENTS
 	// if (directory->size == directory->capacity) { //check if array is full > resize
 	// 	resizeDirectory(directory);
 	// }
