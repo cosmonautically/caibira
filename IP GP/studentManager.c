@@ -2,6 +2,7 @@
 #define STUDMAN
 
 #include "student.h"
+#include "studentManager.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

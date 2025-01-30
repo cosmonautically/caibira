@@ -1,3 +1,5 @@
+#include "student.h"
+#include "studentManager.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +31,7 @@ typedef struct studentInner {
     char surname[10];      // last name
 	int year;
     Class* passedClasses;   // pointer to the linked list passedClasses
-} student;
+} studentInner;
 
 
 
