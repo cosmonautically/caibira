@@ -47,6 +47,8 @@ strncpy(student->surname, surname, sizeof(student->surname) - 1);
 student->passedClasses = NULL;
 }
 
+int getNumberOfPassedCourses(student s);
+
 /*EFFECT: Returns the name of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentName(student s){
@@ -87,7 +89,10 @@ char** getPassedCourses(student s){
 
 	int size = getNumberOfPassedCourses(s);
 	int i = 0;
-	char passarray[] = malloc(size*sizeof(char[30]));
+	char** passarray = (char**)malloc(size * sizeof(char*));
+	for (int j = 0; j < size; j++) {
+		passarray[j] = (char*)malloc(30 * sizeof(char));
+	}
 	Class* current = s.passedClasses;
 
 	if (current == NULL){
@@ -101,7 +106,7 @@ char** getPassedCourses(student s){
 				i++;
 		}
 	}
-	return *passarray;
+	return passarray;
 }
 
 /*EFFECT: Returns the number of the courses that the student passed.
@@ -110,7 +115,7 @@ int getNumberOfPassedCourses(student s){
 
 	if (!s.passedClasses) {
 		printf("Student %s %s has not passed any classes.\n", s.name, s.surname);
-        return;
+        return 0;
 	}
 
 	//printf("Classes passed by %s %s:\n", s.name, s.surname);
