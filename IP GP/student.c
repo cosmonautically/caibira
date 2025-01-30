@@ -50,8 +50,8 @@ student->passedClasses = NULL;
 /*EFFECT: Returns the name of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentName(student s){
-	if (s.name !=NULL){
-		return s.name;
+	if (s.name != NULL){
+		return strdup(s.name);
 	}
 	else return "NONE";
 }
@@ -60,7 +60,7 @@ char * getStudentName(student s){
           If s is NULL it returns "NONE".*/
 char * getStudentSurname(student s){
 	if (s.surname !=NULL){
-		return s.surname;
+		return strdup(s.surname);
 	}
 	else return "NONE";
 }
