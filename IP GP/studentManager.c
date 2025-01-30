@@ -1,6 +1,3 @@
-#ifndef STUDMAN
-#define STUDMAN
-
 #include "student.h"
 #include "studentManager.h"
 #include <stdio.h>
@@ -144,5 +141,3 @@ int getStudentsBySurname(studman sm, char * surname){
 void freeStudman(studman sm) {
     free(sm);
 }
-
-#endif
