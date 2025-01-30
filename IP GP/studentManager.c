@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 /*In this file we will define students' managers. A student manager allows to manage groups of AUC students.
 A student manager hi (students) is a mutable collection of students (see student.h) where students can be added.
@@ -127,7 +128,7 @@ int getStudentsBySurname(studman sm, char * surname){
     student s;
     for(int i=0;i<sm->size-1;i++){
         if (strcmp(getStudentSurname(sm->students[i]), surname) == 0) {
-            s = sm->students[i];
+        s = sm->students[i];
         }
     }
     return getStudentId(s);
