@@ -1,11 +1,9 @@
-#include "student.h"
+
 #include "studentManager.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef STUD
-#define STUD
+#include "student.h"
 
 
 /*OVERVIEW: This is the interface for a student data structure. 
@@ -42,13 +40,13 @@ student newStudent(char * name, char * surname, int id,  int year){ //CAN WE CHA
 	// }
 
 	// add student at end of array
-	student* student = malloc(sizeof(student)); 
+	student student = malloc(sizeof(student)); 
 	student->year = year;
 	student->id = id;
 	strncpy(student->name, name, sizeof(student->name) - 1);
 	strncpy(student->surname, surname, sizeof(student->surname) - 1);
 	student->passedClasses = NULL;
-	return *student;
+	return student;
 }
 
 int getNumberOfPassedCourses(student s);
@@ -56,8 +54,8 @@ int getNumberOfPassedCourses(student s);
 /*EFFECT: Returns the name of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentName(student s){
-	if (s.name != NULL){
-		return strdup(s.name);
+	if (s->name != NULL){
+		return strdup(s->name);
 	}
 	else return "NONE";
 }
@@ -65,8 +63,8 @@ char * getStudentName(student s){
 /*EFFECT: Returns the surname of the student s. 
           If s is NULL it returns "NONE".*/
 char * getStudentSurname(student s){
-	if (s.surname !=NULL){
-		return strdup(s.surname);
+	if (s->surname !=NULL){
+		return strdup(s->surname);
 	}
 	else return "NONE";
 }
@@ -74,14 +72,14 @@ char * getStudentSurname(student s){
 /*EFFECT: Returns the id of the student s. 
           If s is NULL it returns -1.*/
 int getStudentId(student s){
-	return s.id;
+	return s->id;
 }
 
 /*EFFECT: Returns the year in which the student s enrolled. 
 	  If s is NULL it returns -1.*/
 int getStudentYear(student s){
-	if (&s.year != NULL){
-		return s.year;}
+	if (&s->year != NULL){
+		return s->year;}
 	else return -1;
 }
 
@@ -97,10 +95,10 @@ char** getPassedCourses(student s){
 	for (int j = 0; j < size; j++) {
 		passarray[j] = (char*)malloc(30 * sizeof(char));
 	}
-	Class* current = s.passedClasses;
+	Class* current = s->passedClasses;
 
 	if (current == NULL){
-		printf("Student %s %s has not passed any classes :c\n", s.name, s.surname);
+		printf("Student %s %s has not passed any classes :c\n", s->name, s->surname);
 		return NULL;
 		}
 	else {
@@ -118,15 +116,15 @@ char** getPassedCourses(student s){
 If s is NULL returns -1.*/
 int getNumberOfPassedCourses(student s){
 
-	if (!s.passedClasses) {
-		printf("Student %s %s has not passed any classes.\n", s.name, s.surname);
+	if (!s->passedClasses) {
+		printf("Student %s %s has not passed any classes.\n", s->name, s->surname);
         return 0;
 	}
 
 	//printf("Classes passed by %s %s:\n", s.name, s.surname);
 
 	int numofcourses;
-	Class* current = s.passedClasses;
+	Class* current = s->passedClasses;
 
 	while(current!=NULL){
 		//cycle through passed course
@@ -144,16 +142,16 @@ void addLastPassedCourse(student s, char* courseName) {
 		exit(EXIT_FAILURE);
 	}
 	strncpy(newClass->name, courseName, sizeof(newClass->name) - 1);
-	newClass->next = s.passedClasses;
-	s.passedClasses = newClass;
+	newClass->next = s->passedClasses;
+	s->passedClasses = newClass;
 }
 
 /*EFFECT: Frees the space used to store s. 
           Has no effects if s is NULL.*/
 void freeStudent(student s) {
 	// free passed classes
-	if (s.passedClasses != NULL) {
-		Class* current = s.passedClasses;
+	if (s->passedClasses != NULL) {
+		Class* current = s->passedClasses;
 		Class* next;
 		while (current != NULL) {
 			next = current->next;
@@ -162,5 +160,3 @@ void freeStudent(student s) {
 		}
 	}
 }
-
-#endif
